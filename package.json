@@ -4,15 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=development && cp ./src/index.html ./dist/index.html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lhuthng/bomberman-client.git"
   },
-  "keywords": [
-    "phaser"
-  ],
   "author": "lhuthng",
   "license": "ISC",
   "bugs": {
@@ -20,6 +18,8 @@
   },
   "homepage": "https://github.com/lhuthng/bomberman-client#readme",
   "dependencies": {
-    "phaser": "^3.55.2"
+    "phaser": "^3.55.2",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
   }
 }
