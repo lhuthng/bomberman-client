@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode=development && cp ./src/index.html ./dist/index.html",
-    "deploy": "npm run build && rm -r -f ../bomberman-server/build/* && cp ./dist/* ../bomberman-server/build/"
+    "clear": "rm -r -f ./test/*",
+    "test": "webpack --mode=development && cp ./src/index.html ./test/index.html && cp -r ./src/assets ./test/",
+    "build": "npm run test && cp -r ./test/* ./build/",
+    "deploy-from-build": "rm -r -f ../bomberman-server/build/* && cp -r ./build/* ../bomberman-server/build/",
+    "deploy-from-test": "rm -r -f ../bomberman-server/test/* && cp -r ./test/* ../bomberman-server/test/"
   },
   "repository": {
     "type": "git",

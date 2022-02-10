@@ -1,23 +1,5 @@
 import Phaser from "phaser";
-import Command from './command';
-
-const command = new Command();
-
-class Stage extends Phaser.Scene {
-    constructor() {
-        super();
-        this.data = {}
-    }
-    preload() {
-        this.load.path = '../assets/';
-    }
-    create() {
-
-    }
-    update() {
-
-    }
-}
+import StartScene from "./start-scene";
 
 const config = {
     type: Phaser.WEBGL,
@@ -30,5 +12,7 @@ const config = {
         default: 'arcade',
         arcade: { debug: true }
     },
-    scene: [ Stage ]
+    scene: [ StartScene ]
 }
+
+const game = new Phaser.Game(config);
