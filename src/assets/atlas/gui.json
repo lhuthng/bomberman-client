@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "background",
+	"frame": {"x":0,"y":34,"w":400,"h":300},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":300},
+	"sourceSize": {"w":400,"h":300}
+},
+{
+	"filename": "join-button",
+	"frame": {"x":4,"y":0,"w":18,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":12},
+	"sourceSize": {"w":18,"h":12}
+},
+{
+	"filename": "room-box",
+	"frame": {"x":22,"y":0,"w":279,"h":34},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":279,"h":34},
+	"sourceSize": {"w":279,"h":34}
+},
+{
+	"filename": "scroll-button",
+	"frame": {"x":0,"y":0,"w":4,"h":2},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":2},
+	"sourceSize": {"w":4,"h":2}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "gui.png",
+	"format": "RGBA8888",
+	"size": {"w":400,"h":334},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:49e689343c4e0d305eeff7a953542a62:ee22165f1029ab0fe53bcf52e4fd33c2:788b34ed4e778d63c84b2c3df4d44949$"
+}
+}

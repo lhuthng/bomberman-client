@@ -8,7 +8,8 @@
     "test": "webpack --mode=development && cp ./src/index.html ./test/index.html && cp -r ./src/assets ./test/",
     "build": "npm run test && cp -r ./test/* ./build/",
     "deploy-from-build": "rm -r -f ../bomberman-server/build/* && cp -r ./build/* ../bomberman-server/build/",
-    "deploy-from-test": "rm -r -f ../bomberman-server/test/* && cp -r ./test/* ../bomberman-server/test/"
+    "deploy-from-test": "rm -r -f ../bomberman-server/test/* && cp -r ./test/* ../bomberman-server/test/",
+    "test-and-deploy": "npm run test && npm run deploy-from-test"
   },
   "repository": {
     "type": "git",
