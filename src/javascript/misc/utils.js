@@ -1,5 +1,3 @@
-import Phaser from "phaser";
-
 const Utils = {
     event: () => {
         const group = {};

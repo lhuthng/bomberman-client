@@ -1,4 +1,6 @@
+import Global from "../../misc/global";
 import socket from "../../misc/socket";
+import Utils from "../../misc/utils";
 
 const [ width, height, space, padding ] = [279, 35, 2, 5];
 const capacityColors = ['#ff0000', '#0ababa', '#0ababa', '#ffff00', '#ff0000'];
@@ -64,23 +66,51 @@ const RoomManager = (scene, socket) => {
     const pivot = { x: 60, y: 70 };
 
     const background = scene.add.image(0, 0, 'gui', 'background').setOrigin(0);
-    const playerName = scene.add.text(130, 32, "", { color: "#af59ee" }).setOrigin(0.5, 1);
+    const playerName = scene.add.text(130, 34, "", { color: "#af59ee" }).setOrigin(0.5, 1).setInteractive();
+    let backupName = "";
 
     const rect = { x: 342, y: 67, w: 4, h: 181 };
     const scrollBar = scene.add.rectangle(rect.x, rect.y, 0, 0, 0xff0000).setOrigin(0);
     const hostButton = scene.add.zone(322, 263, 16, 24).setOrigin(0).setInteractive();
     
+    playerName.customEvent = Utils.event();
+    playerName.customEvent.on('keydown', event => {
+        if (event.keyCode === 8 && playerName.text.length > 0)
+        {
+            playerName.text = playerName.text.substr(0, playerName.text.length - 1);
+        }
+        else if (event.keyCode === 32 || (event.keyCode >= 48 && event.keyCode < 90))
+        {
+            if (playerName.text.length < 7) playerName.text += event.key;
+        }
+        else if (event.keyCode === 13) {
+            Global.focus.setTarget();
+            socket.emit('update name', playerName.text);
+        }
+    });
+    playerName.customEvent.on('unfocus', () => {
+        playerName.isTargeted = false;
+        playerName.setStroke('#ee0000', 0);
+    })
+    playerName.on('pointerover', () => {
+        playerName.setStroke("#ee0000", 2);
+    });
+    playerName.on('pointerout', () => {
+        if (!playerName.isTargeted) playerName.setStroke("#ee0000", 0);
+    })
+    playerName.on('pointerdown', () => {
+        Global.focus.setTarget(playerName);
+        playerName.isTargeted = true;
+    });
     
     let roomId;
     socket.on('created room', id => {
         roomId = id;
     });
     const createRoom = () => {
-        console.log('created');
         socket.emit('create room', 'kungfu panda');
     }
     const leaveRoom = () => {
-        console.log('left');
         socket.emit('leave room', roomId);
     }
     let action = createRoom;
@@ -98,7 +128,7 @@ const RoomManager = (scene, socket) => {
 
     let scrollSpeed = 0;
     let zoneHeight = 0;
-
+    
     scene.customEvent.on('update', () => {
         if (scrollSpeed !== 0) {
             let newY = listContainer.y + scrollSpeed;
@@ -130,9 +160,6 @@ const RoomManager = (scene, socket) => {
     });
 
     container.add([background, zone, listContainer, scrollBar, hostButton, playerName]);
-    const setName = name => {
-        playerName.setText(name);
-    }
 
     const updateScrollBar = () => {
         zoneHeight = list.length * height + (list.length - 1) * space;
@@ -165,7 +192,24 @@ const RoomManager = (scene, socket) => {
         list.forEach(room => room.destroy());
         list.length = 0;
     }
-    return { container, setName, update, destroy };
+    
+    socket.on('created player', (_, name) => {
+        backupName = name;
+        playerName.text = name;
+    });
+    socket.on('updated name', name => {
+        console.log('updated', name);
+        backupName = name;
+        playerName.text = name;
+    });
+    socket.on('failed updating name', () => {
+        console.log('failed updating name');
+        playerName.text = backupName;
+    });
+    socket.on('received rooms', (rooms) => {
+        update(rooms);
+    });
+    return { container, update, destroy };
 }
 
 export default RoomManager;

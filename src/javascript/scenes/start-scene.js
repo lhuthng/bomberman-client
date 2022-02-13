@@ -1,14 +1,15 @@
 import Phaser from "phaser";
+import Global from "../misc/global";
 
 import Socket from "../misc/socket";
 import Utils from "../misc/utils";
-import RoomManager from "./support/room-list";
+import RoomManager from "./support/room-manager";
 
 const socket = Socket();
 
 export default class StartScene extends Phaser.Scene {
     constructor() {
-        super();
+        super('start-scene');
         socket.establish();
         this.customEvent = Utils.event();
     }
@@ -29,17 +30,14 @@ export default class StartScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
-        const received = rooms => {
-            roomManager.update(rooms);
-        }
         socket.on('disconnect', () => {
             socket.off('connect');
             roomTimer.destroy();
         });
-        socket.on('created player', (_, name) => {
-            roomManager.setName(name);
+
+        this.input.keyboard.on('keydown', event => {
+            Global.focus.target && Global.focus.target.customEvent.trigger('keydown', event);
         });
-        socket.on('received rooms', received);
     }
     update() {
         this.customEvent.trigger('update');

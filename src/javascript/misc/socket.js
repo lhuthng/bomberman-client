@@ -17,7 +17,7 @@ class Socket {
                 console.log(`Socket is connected.`);
             });
             socket.on('disconnect', () => {
-                this.status = 'Disconnected'
+                this.status = 'Disconnected';
                 console.log(`Socket is disconnected.`);
             });
             socket.on('created player', (pid, name) => {
