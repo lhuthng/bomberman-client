@@ -61,22 +61,13 @@ const RoomManager = (scene, socket) => {
     const container = scene.add.container().setScale(2);
     const listContainer = scene.add.container();
     let list = [];
-    const pivot = { x: 60, y: 72 };
+    const pivot = { x: 60, y: 70 };
 
     const background = scene.add.image(0, 0, 'gui', 'background').setOrigin(0);
     const playerName = scene.add.text(130, 32, "", { color: "#af59ee" }).setOrigin(0.5, 1);
 
-    const scrollBarProps = {
-        rect: { x: 342, y: 65, w: 4, h: 180 },
-        getRect: function(topPercent, bottomPercent) {
-            return {
-                top: this.y + this.h * topPercent,
-                bottom: this.y + this.h * bottomPercent
-            }
-        }
-    }
-    const rect = scrollBarProps.rect;
-    const scrollBar = scene.add.rectangle(rect.x, rect.y, rect.w, 0, 0xff0000).setOrigin(0);
+    const rect = { x: 342, y: 67, w: 4, h: 181 };
+    const scrollBar = scene.add.rectangle(rect.x, rect.y, 0, 0, 0xff0000).setOrigin(0);
     const hostButton = scene.add.zone(322, 263, 16, 24).setOrigin(0).setInteractive();
     
     
@@ -99,22 +90,61 @@ const RoomManager = (scene, socket) => {
     });
 
     const graphics = scene.make.graphics();
-
-    graphics.fillRect(58, 70, 284, 172).setScale(2);
+    const zoneSize = { w: 284, h: 172 };
+    graphics.fillRect(58, 70, zoneSize.w, zoneSize.h).setScale(2);
+    const zone = scene.add.zone(58, 70, zoneSize.w, zoneSize.h).setOrigin(0).setInteractive();
     const mask = new Phaser.Display.Masks.GeometryMask(scene, graphics);
     listContainer.setMask(mask);
 
-    container.add([background, listContainer, scrollBar, hostButton, playerName]);
+    let scrollSpeed = 0;
+    let zoneHeight = 0;
+
+    scene.customEvent.on('update', () => {
+        if (scrollSpeed !== 0) {
+            let newY = listContainer.y + scrollSpeed;
+            if (zoneHeight >= zoneSize.h && newY < zoneSize.h - zoneHeight) {
+                newY = zoneSize.h - zoneHeight;
+                scrollSpeed = 0;
+            }
+            else if (zoneHeight < zoneSize.h) {
+                newY = listContainer.y;
+                scrollSpeed = 0;
+            }
+            else if (newY > 0) {
+                newY = 0;
+                scrollSpeed = 0;
+            }
+            scrollSpeed = Phaser.Math.Linear(scrollSpeed, 0, 0.4);
+            scrollBar.setY(rect.y - newY * (scrollBar.height / rect.h));
+            listContainer.y = newY;
+        }
+    });
+
+    zone.on('wheel', (pointer) => {
+        if (pointer.deltaY > 0) {
+            scrollSpeed = 10;
+        }
+        else if (pointer.deltaY < 0) {
+            scrollSpeed = -10;
+        }
+    });
+
+    container.add([background, zone, listContainer, scrollBar, hostButton, playerName]);
     const setName = name => {
         playerName.setText(name);
     }
-    const updateScrollBar = () => {
-        const max = list.length * (height + space) - list.length;
-        if (max < 172) scrollBar.setSize(rect.w, 0);
-        else {
-            const scrollBarHeight = rect.h * (172 / max);
-            scrollBar.setSize(rect.w, scrollBarHeight);
 
+    const updateScrollBar = () => {
+        zoneHeight = list.length * height + (list.length - 1) * space;
+        if (zoneHeight < 0) zoneHeight = 0;
+        if (zoneHeight < zoneSize.h) {
+            scrollBar.setY(rect.y);
+            scrollBar.setSize(rect.w, 0);
+            if (listContainer.y < 0) listContainer.y = 0;
+        }
+        else {
+            const scrollBarHeight = rect.h * (zoneSize.h / zoneHeight);
+            scrollBar.setSize(rect.w, scrollBarHeight);
         }
     }
     const update = rooms => {

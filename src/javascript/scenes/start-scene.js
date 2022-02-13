@@ -10,6 +10,7 @@ export default class StartScene extends Phaser.Scene {
     constructor() {
         super();
         socket.establish();
+        this.customEvent = Utils.event();
     }
     init() {
 
@@ -29,7 +30,6 @@ export default class StartScene extends Phaser.Scene {
             loop: true
         });
         const received = rooms => {
-            console.log(rooms);
             roomManager.update(rooms);
         }
         socket.on('disconnect', () => {
@@ -40,5 +40,8 @@ export default class StartScene extends Phaser.Scene {
             roomManager.setName(name);
         });
         socket.on('received rooms', received);
+    }
+    update() {
+        this.customEvent.trigger('update');
     }
 }
