@@ -1,44 +1,84 @@
 {"frames": [
 
 {
-	"filename": "background",
-	"frame": {"x":0,"y":34,"w":400,"h":300},
+	"filename": "apprentice-avatar",
+	"frame": {"x":0,"y":0,"w":50,"h":50},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":300},
-	"sourceSize": {"w":400,"h":300}
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "closed-slot",
+	"frame": {"x":50,"y":0,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "host-frame",
+	"frame": {"x":100,"y":0,"w":56,"h":58},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":56,"h":58},
+	"sourceSize": {"w":56,"h":58}
 },
 {
 	"filename": "join-button",
-	"frame": {"x":4,"y":0,"w":18,"h":12},
+	"frame": {"x":156,"y":0,"w":18,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":12},
 	"sourceSize": {"w":18,"h":12}
 },
 {
+	"filename": "open-slot",
+	"frame": {"x":174,"y":0,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+},
+{
+	"filename": "player-frame",
+	"frame": {"x":224,"y":0,"w":52,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":52},
+	"sourceSize": {"w":52,"h":52}
+},
+{
 	"filename": "room-box",
-	"frame": {"x":22,"y":0,"w":279,"h":34},
+	"frame": {"x":0,"y":58,"w":279,"h":34},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":279,"h":34},
 	"sourceSize": {"w":279,"h":34}
 },
 {
-	"filename": "scroll-button",
-	"frame": {"x":0,"y":0,"w":4,"h":2},
+	"filename": "room-search-box",
+	"frame": {"x":0,"y":92,"w":400,"h":300},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":2},
-	"sourceSize": {"w":4,"h":2}
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":300},
+	"sourceSize": {"w":400,"h":300}
+},
+{
+	"filename": "room",
+	"frame": {"x":0,"y":392,"w":296,"h":206},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":296,"h":206},
+	"sourceSize": {"w":296,"h":206}
 }],
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "gui.png",
 	"format": "RGBA8888",
-	"size": {"w":400,"h":334},
+	"size": {"w":400,"h":598},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:49e689343c4e0d305eeff7a953542a62:ee22165f1029ab0fe53bcf52e4fd33c2:788b34ed4e778d63c84b2c3df4d44949$"
+	"smartupdate": "$TexturePacker:SmartUpdate:c636e339dae0f2d69c5f440d28a1b4b9:78a57caf7321ad19eff8a704088c7782:788b34ed4e778d63c84b2c3df4d44949$"
 }
 }
