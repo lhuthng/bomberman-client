@@ -232,6 +232,8 @@ const Room = (scene, socket) => {
     const container = scene.add.container().setVisible(false);
     const background = scene.add.image(52, 77, 'gui', 'room').setOrigin(0);
     const playerContainer = scene.add.container();
+    const leaveZone = scene.add.zone(54, 235, 27, 38).setOrigin(0).setInteractive();
+    const startZone = scene.add.zone(319, 235, 27, 38).setOrigin(0).setInteractive();
     // const chatContainer = scene.add.container();
     const playerAvatars = [];
     const playerFrames = [];
@@ -240,15 +242,19 @@ const Room = (scene, socket) => {
         const x = 113 + 58 * index, y = 247;
         playerAvatars.push(scene.add.image(x, y, 'gui', 'open-slot'));
         playerFrames.push(scene.add.image(x, y, 'gui', 'player-frame').setVisible(false));
-        playerNames.push(scene.add.text(x, y, "").setOrigin(0.5, 0.5).setVisible(false));
+        playerNames.push(scene.add.text(x, y + 40, "").setOrigin(0.5, 0.5).setFontSize(10).setVisible(false));
     }
     playerContainer.add(playerAvatars);
     playerContainer.add(playerFrames);
     playerContainer.add(playerNames);
 
-    container.add([ background, playerContainer ]);
+    container.add([ background, playerContainer, leaveZone, startZone ]);
     //
-
+    leaveZone.on('pointerdown', () => {
+        console.log('hi');
+        socket.emit('leave room', roomId);
+    })
+    //
     let roomId, hostId;
     const indexMapping = { };
     const onBroadcastJoinedRoom = (playerId, playerName, index) => {
@@ -348,11 +354,6 @@ const RoomManager = (scene, socket) => {
         }
         else console.log("WTF");
     });
-    // socket.on('joined room', (id, playerId) => {
-
-    // });
-
-    // socket.on('left room', )
 
     container.add([ roomSearcher.container, room.container ]);
     return { container };
